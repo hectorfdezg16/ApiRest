@@ -1,0 +1,155 @@
+---
+openapi: "3.0.0"
+info:
+  title: "Eetac Wars API REST"
+  description: "API REST de nuestro juego Eetac Wars"
+  contact:
+    name: "Héctor Fernández"
+    email: "hector.fernandez.granja@estudiantat.upc.edu"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  version: "1.0.0"
+servers:
+- url: "https://virtserver.swaggerhub.com/hectorfdezg16/EetacWarsAPIREST/1.0.0"
+  description: "Servidor de Eetac Wars"
+- url: "https://wwww.google.com/api"
+  description: "Servidor de prueba Eetac Wars"
+tags:
+- name: "usuarios"
+- name: "jugadores"
+- name: "mapas"
+- name: "enemigos"
+- name: "aliados"
+- name: "items"
+paths:
+  /usuarios:
+    get:
+      tags:
+      - "usuarios"
+      summary: "obtener todos los usuarios"
+      description: "Obtener la lista de todos los usuarios"
+      parameters:
+      - name: "nombre"
+        in: "query"
+        description: "nombre del usuario"
+        required: true
+        style: "form"
+        explode: true
+        schema:
+          type: "string"
+          example: "Oscar"
+      - name: "email"
+        in: "query"
+        description: "correo del usario"
+        required: true
+        style: "form"
+        explode: true
+        schema:
+          type: "string"
+          example: "oscar.vilamitjana@estudiantat.upc.edu"
+      responses:
+        "200":
+          description: "Petición validada"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    nombre:
+                      type: "string"
+                      example: "Oscar"
+                    email:
+                      type: "string"
+                      example: "oscar.vilamitjana@estudiantat.upc.edu"
+        "404":
+          description: "Petición no encontrada"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "{\"mensaje\":\"Error 404. Pagina o Petición no encontrada.\"\
+                  }"
+    post:
+      tags:
+      - "usuarios"
+      summary: "añadir un usuario"
+      description: "añadir un nuevo usuario a la base de datos"
+      parameters:
+      - name: "usuario"
+        in: "query"
+        description: "crear nuevo usuario en la API"
+        required: false
+        style: "form"
+        explode: true
+        schema:
+          type: "object"
+          properties:
+            nombre:
+              type: "string"
+              description: "Nombre"
+              example: "Gabriel"
+            id:
+              type: "number"
+              description: "id del usuario"
+              example: 5
+            email:
+              type: "string"
+              description: "Correo electronico del usuario"
+              example: "gabriel.donate@estudiantat.upc.edu"
+      responses:
+        "200":
+          description: "Petición validada"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "{\"mensaje\":\"ok\"}"
+            application/xml:
+              schema:
+                type: "string"
+                example: "ok"
+            text/plain:
+              schema:
+                type: "string"
+                example: "ok"
+        "404":
+          description: "Petición no encontrada"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "Error 404. Pagina o Petición no encontrada."
+  /usuarios/{id}:
+    get:
+      tags:
+      - "usuarios"
+      summary: "obtener un usuario por id"
+      description: "Permite obtener usuario segun id"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id del usuario"
+        required: true
+        style: "simple"
+        explode: false
+        schema:
+          minimum: 1
+          type: "integer"
+          example: 3
+      responses:
+        "200":
+          description: "Petición validada"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "Manolo"
+        "404":
+          description: "Petición no encontrada"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "Error 404. Pagina o Petición no encontrada."
