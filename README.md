@@ -1,5 +1,4 @@
-API REST Eetac Wars
-
+# API REST Eetac Wars
 Hay dos ficheros de la API REST: json y yaml:
   - Hay 2 entidades de momento: Usuario / Item.
   
