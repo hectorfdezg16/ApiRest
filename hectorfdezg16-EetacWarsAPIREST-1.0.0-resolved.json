@@ -28,18 +28,6 @@
       "name": "usuarios"
     },
     {
-      "name": "jugadores"
-    },
-    {
-      "name": "mapas"
-    },
-    {
-      "name": "enemigos"
-    },
-    {
-      "name": "aliados"
-    },
-    {
       "name": "items"
     }
   ],
@@ -231,6 +219,247 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "usuarios"
+        ],
+        "summary": "eliminar un usuario por id",
+        "description": "Eliminar un usuario según id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id del usuario",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "example": 3
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuario fue eliminado"
+          }
+        }
+      }
+    },
+    "/items": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "obtener todos los items",
+        "description": "Obtener la lista de todos los items con su respectivo nombre en el juego",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id del item del juego",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "example": 7
+            }
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "nombre del item",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "pocion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Petición validada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 7
+                      },
+                      "nombre": {
+                        "type": "string",
+                        "example": "pocion"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Petición no encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"mensaje\":\"Error 404. Pagina o Petición no encontrada.\"}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "items"
+        ],
+        "summary": "añadir un nuevo item",
+        "description": "añadir un nuevo item al juego",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "crear nuevo item en la API",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "description": "id del item",
+                  "example": 9
+                },
+                "nombre": {
+                  "type": "string",
+                  "description": "nombre del item",
+                  "example": "muro"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Petición validada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"mensaje\":\"ok\"}"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "example": "ok"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "ok"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Petición no encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Error 404. Pagina o Petición no encontrada."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{id}": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "obtener un item por id",
+        "description": "Permite obtener un item segun id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id del item",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "example": 26
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Petición validada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "escudo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Petición no encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Error 404. Pagina o Petición no encontrada."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "items"
+        ],
+        "summary": "eliminar un item por id",
+        "description": "Eliminar un item según id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id del item",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "example": 3
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item fue eliminado"
           }
         }
       }
