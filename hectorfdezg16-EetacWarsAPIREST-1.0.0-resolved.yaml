@@ -315,3 +315,104 @@ paths:
       responses:
         "204":
           description: "Item fue eliminado"
+components:
+  schemas:
+    Usuario:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombre:
+          type: "string"
+        correo:
+          type: "string"
+        contraseña:
+          type: "string"
+        población:
+          type: "string"
+        Jugador:
+          type: "object"
+    Mapa:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombre:
+          type: "string"
+        nivel:
+          type: "integer"
+        Item:
+          type: "object"
+        Enemigo:
+          type: "object"
+        Aliado:
+          type: "object"
+    Jugador:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombreJugador:
+          type: "string"
+        Item:
+          type: "object"
+        vida:
+          type: "integer"
+        nivel:
+          type: "integer"
+    Item:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombre:
+          type: "string"
+        nivel:
+          type: "integer"
+        cantidad:
+          type: "integer"
+        valor:
+          type: "integer"
+        Mapa:
+          type: "object"
+    Juego:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        Jugador:
+          type: "object"
+        Mapa:
+          type: "object"
+        totalMuertes:
+          type: "integer"
+        posicionX:
+          type: "integer"
+        posicionY:
+          type: "integer"
+    Enemigo:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombre:
+          type: "string"
+        vida:
+          type: "integer"
+        daño:
+          type: "integer"
+        nivel:
+          type: "integer"
+    Aliado:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        nombre:
+          type: "string"
+        vida:
+          type: "integer"
+        Item:
+          type: "object"
+        nivel:
+          type: "integer"
