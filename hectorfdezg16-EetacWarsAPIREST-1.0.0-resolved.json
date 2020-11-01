@@ -25,17 +25,17 @@
   ],
   "tags": [
     {
-      "name": "usuarios"
+      "name": "usuario"
     },
     {
-      "name": "items"
+      "name": "item"
     }
   ],
   "paths": {
-    "/usuarios": {
+    "/usuario": {
       "get": {
         "tags": [
-          "usuarios"
+          "usuario"
         ],
         "summary": "obtener todos los usuarios",
         "description": "Obtener la lista de todos los usuarios",
@@ -101,9 +101,63 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "actualizar un usuario",
+        "description": "Esto solo puede hacerlo el usuario que haya iniciado sesión",
+        "parameters": [
+          {
+            "name": "usuario",
+            "in": "query",
+            "description": "modificiar un usuario de la API",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "Correo electronico del usuario",
+                  "example": "gabriel.donate@estudiantat.upc.edu"
+                },
+                "contraseña": {
+                  "type": "string",
+                  "description": "Contraseña del usuario",
+                  "example": "12345"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Actualizar un objeto",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Usuario proporcionado no válido"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "405": {
+            "description": "Excepción de validación"
+          }
+        }
+      },
       "post": {
         "tags": [
-          "usuarios"
+          "usuario"
         ],
         "summary": "añadir un usuario",
         "description": "añadir un nuevo usuario a la base de datos",
@@ -175,10 +229,10 @@
         }
       }
     },
-    "/usuarios/{id}": {
+    "/usuario/{id}": {
       "get": {
         "tags": [
-          "usuarios"
+          "usuario"
         ],
         "summary": "obtener un usuario por id",
         "description": "Permite obtener usuario segun id",
@@ -224,7 +278,7 @@
       },
       "delete": {
         "tags": [
-          "usuarios"
+          "usuario"
         ],
         "summary": "eliminar un usuario por id",
         "description": "Eliminar un usuario según id",
@@ -250,10 +304,10 @@
         }
       }
     },
-    "/items": {
+    "/item": {
       "get": {
         "tags": [
-          "items"
+          "item"
         ],
         "summary": "obtener todos los items",
         "description": "Obtener la lista de todos los items con su respectivo nombre en el juego",
@@ -320,9 +374,63 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "item"
+        ],
+        "summary": "actualizar un item",
+        "description": "Esto solo puede hacerlo el usuario que haya iniciado sesión",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "modificiar un item de la API",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string",
+                  "description": "Nombre del objeto del juego",
+                  "example": "espada"
+                },
+                "cantidad": {
+                  "type": "number",
+                  "description": "cantidad del objeto mencionado",
+                  "example": 2
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Actualizar un objeto",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Item proporcionado no válido"
+          },
+          "404": {
+            "description": "Item no encontrado"
+          },
+          "405": {
+            "description": "Excepción de validación"
+          }
+        }
+      },
       "post": {
         "tags": [
-          "items"
+          "item"
         ],
         "summary": "añadir un nuevo item",
         "description": "añadir un nuevo item al juego",
@@ -389,10 +497,10 @@
         }
       }
     },
-    "/items/{id}": {
+    "/item/{id}": {
       "get": {
         "tags": [
-          "items"
+          "item"
         ],
         "summary": "obtener un item por id",
         "description": "Permite obtener un item segun id",
@@ -438,7 +546,7 @@
       },
       "delete": {
         "tags": [
-          "items"
+          "item"
         ],
         "summary": "eliminar un item por id",
         "description": "Eliminar un item según id",
@@ -551,12 +659,15 @@
           "valor": {
             "type": "integer"
           },
+          "tipo": {
+            "type": "string"
+          },
           "Mapa": {
             "type": "object"
           }
         }
       },
-      "Juego": {
+      "Partida": {
         "type": "object",
         "properties": {
           "id": {

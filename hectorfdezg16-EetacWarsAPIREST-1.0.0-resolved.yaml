@@ -1,418 +1,491 @@
 ---
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
-  title: "Eetac Wars API REST"
-  description: "API REST de nuestro juego Eetac Wars"
+  title: Eetac Wars API REST
+  description: API REST de nuestro juego Eetac Wars
   contact:
-    name: "Héctor Fernández"
-    email: "hector.fernandez.granja@estudiantat.upc.edu"
+    name: Héctor Fernández
+    email: hector.fernandez.granja@estudiantat.upc.edu
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-  version: "1.0.0"
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
 servers:
-- url: "https://virtserver.swaggerhub.com/hectorfdezg16/EetacWarsAPIREST/1.0.0"
-  description: "Servidor de Eetac Wars"
-- url: "https://wwww.google.com/api"
-  description: "Servidor de prueba Eetac Wars"
+- url: https://virtserver.swaggerhub.com/hectorfdezg16/EetacWarsAPIREST/1.0.0
+  description: Servidor de Eetac Wars
+- url: https://wwww.google.com/api
+  description: Servidor de prueba Eetac Wars
 tags:
-- name: "usuarios"
-- name: "items"
+- name: usuario
+- name: item
 paths:
-  /usuarios:
+  /usuario:
     get:
       tags:
-      - "usuarios"
-      summary: "obtener todos los usuarios"
-      description: "Obtener la lista de todos los usuarios"
+      - usuario
+      summary: obtener todos los usuarios
+      description: Obtener la lista de todos los usuarios
       parameters:
-      - name: "nombre"
-        in: "query"
-        description: "nombre del usuario"
+      - name: nombre
+        in: query
+        description: nombre del usuario
         required: true
-        style: "form"
+        style: form
         explode: true
         schema:
-          type: "string"
-          example: "Oscar"
-      - name: "email"
-        in: "query"
-        description: "correo del usario"
+          type: string
+          example: Oscar
+      - name: email
+        in: query
+        description: correo del usario
         required: true
-        style: "form"
+        style: form
         explode: true
         schema:
-          type: "string"
-          example: "oscar.vilamitjana@estudiantat.upc.edu"
+          type: string
+          example: oscar.vilamitjana@estudiantat.upc.edu
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   properties:
                     nombre:
-                      type: "string"
-                      example: "Oscar"
+                      type: string
+                      example: Oscar
                     email:
-                      type: "string"
-                      example: "oscar.vilamitjana@estudiantat.upc.edu"
+                      type: string
+                      example: oscar.vilamitjana@estudiantat.upc.edu
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "{\"mensaje\":\"Error 404. Pagina o Petición no encontrada.\"\
-                  }"
-    post:
+                type: string
+                example: '{"mensaje":"Error 404. Pagina o Petición no encontrada."}'
+    put:
       tags:
-      - "usuarios"
-      summary: "añadir un usuario"
-      description: "añadir un nuevo usuario a la base de datos"
+      - usuario
+      summary: actualizar un usuario
+      description: Esto solo puede hacerlo el usuario que haya iniciado sesión
       parameters:
-      - name: "usuario"
-        in: "query"
-        description: "crear nuevo usuario en la API"
+      - name: usuario
+        in: query
+        description: modificiar un usuario de la API
         required: false
-        style: "form"
+        style: form
         explode: true
         schema:
-          type: "object"
+          type: object
+          properties:
+            email:
+              type: string
+              description: Correo electronico del usuario
+              example: gabriel.donate@estudiantat.upc.edu
+            contraseña:
+              type: string
+              description: Contraseña del usuario
+              example: 12345
+      requestBody:
+        description: Actualizar un objeto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      responses:
+        "400":
+          description: Usuario proporcionado no válido
+        "404":
+          description: Usuario no encontrado
+        "405":
+          description: Excepción de validación
+    post:
+      tags:
+      - usuario
+      summary: añadir un usuario
+      description: añadir un nuevo usuario a la base de datos
+      parameters:
+      - name: usuario
+        in: query
+        description: crear nuevo usuario en la API
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: object
           properties:
             nombre:
-              type: "string"
-              description: "Nombre"
-              example: "Gabriel"
+              type: string
+              description: Nombre
+              example: Gabriel
             id:
-              type: "number"
-              description: "id del usuario"
+              type: number
+              description: id del usuario
               example: 5
             email:
-              type: "string"
-              description: "Correo electronico del usuario"
-              example: "gabriel.donate@estudiantat.upc.edu"
+              type: string
+              description: Correo electronico del usuario
+              example: gabriel.donate@estudiantat.upc.edu
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "{\"mensaje\":\"ok\"}"
+                type: string
+                example: '{"mensaje":"ok"}'
             application/xml:
               schema:
-                type: "string"
-                example: "ok"
+                type: string
+                example: ok
             text/plain:
               schema:
-                type: "string"
-                example: "ok"
+                type: string
+                example: ok
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "Error 404. Pagina o Petición no encontrada."
-  /usuarios/{id}:
+                type: string
+                example: Error 404. Pagina o Petición no encontrada.
+  /usuario/{id}:
     get:
       tags:
-      - "usuarios"
-      summary: "obtener un usuario por id"
-      description: "Permite obtener usuario segun id"
+      - usuario
+      summary: obtener un usuario por id
+      description: Permite obtener usuario segun id
       parameters:
-      - name: "id"
-        in: "path"
-        description: "id del usuario"
+      - name: id
+        in: path
+        description: id del usuario
         required: true
-        style: "simple"
+        style: simple
         explode: false
         schema:
           minimum: 1
-          type: "integer"
+          type: integer
           example: 3
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "Manolo"
+                type: string
+                example: Manolo
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "Error 404. Pagina o Petición no encontrada."
+                type: string
+                example: Error 404. Pagina o Petición no encontrada.
     delete:
       tags:
-      - "usuarios"
-      summary: "eliminar un usuario por id"
-      description: "Eliminar un usuario según id"
+      - usuario
+      summary: eliminar un usuario por id
+      description: Eliminar un usuario según id
       parameters:
-      - name: "id"
-        in: "path"
-        description: "id del usuario"
+      - name: id
+        in: path
+        description: id del usuario
         required: true
-        style: "simple"
+        style: simple
         explode: false
         schema:
           minimum: 1
-          type: "integer"
+          type: integer
           example: 3
       responses:
         "204":
-          description: "Usuario fue eliminado"
-  /items:
+          description: Usuario fue eliminado
+  /item:
     get:
       tags:
-      - "items"
-      summary: "obtener todos los items"
-      description: "Obtener la lista de todos los items con su respectivo nombre en\
-        \ el juego"
+      - item
+      summary: obtener todos los items
+      description: Obtener la lista de todos los items con su respectivo nombre en el juego
       parameters:
-      - name: "id"
-        in: "query"
-        description: "id del item del juego"
+      - name: id
+        in: query
+        description: id del item del juego
         required: true
-        style: "form"
+        style: form
         explode: true
         schema:
           minimum: 1
-          type: "integer"
+          type: integer
           example: 7
-      - name: "nombre"
-        in: "query"
-        description: "nombre del item"
+      - name: nombre
+        in: query
+        description: nombre del item
         required: true
-        style: "form"
+        style: form
         explode: true
         schema:
-          type: "string"
-          example: "pocion"
+          type: string
+          example: pocion
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   properties:
                     id:
-                      type: "integer"
+                      type: integer
                       example: 7
                     nombre:
-                      type: "string"
-                      example: "pocion"
+                      type: string
+                      example: pocion
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "{\"mensaje\":\"Error 404. Pagina o Petición no encontrada.\"\
-                  }"
-    post:
+                type: string
+                example: '{"mensaje":"Error 404. Pagina o Petición no encontrada."}'
+    put:
       tags:
-      - "items"
-      summary: "añadir un nuevo item"
-      description: "añadir un nuevo item al juego"
+      - item
+      summary: actualizar un item
+      description: Esto solo puede hacerlo el usuario que haya iniciado sesión
       parameters:
-      - name: "item"
-        in: "query"
-        description: "crear nuevo item en la API"
+      - name: item
+        in: query
+        description: modificiar un item de la API
         required: false
-        style: "form"
+        style: form
         explode: true
         schema:
-          type: "object"
+          type: object
+          properties:
+            nombre:
+              type: string
+              description: Nombre del objeto del juego
+              example: espada
+            cantidad:
+              type: number
+              description: cantidad del objeto mencionado
+              example: 2
+      requestBody:
+        description: Actualizar un objeto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+        required: true
+      responses:
+        "400":
+          description: Item proporcionado no válido
+        "404":
+          description: Item no encontrado
+        "405":
+          description: Excepción de validación
+    post:
+      tags:
+      - item
+      summary: añadir un nuevo item
+      description: añadir un nuevo item al juego
+      parameters:
+      - name: item
+        in: query
+        description: crear nuevo item en la API
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: object
           properties:
             id:
-              type: "number"
-              description: "id del item"
+              type: number
+              description: id del item
               example: 9
             nombre:
-              type: "string"
-              description: "nombre del item"
-              example: "muro"
+              type: string
+              description: nombre del item
+              example: muro
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "{\"mensaje\":\"ok\"}"
+                type: string
+                example: '{"mensaje":"ok"}'
             application/xml:
               schema:
-                type: "string"
-                example: "ok"
+                type: string
+                example: ok
             text/plain:
               schema:
-                type: "string"
-                example: "ok"
+                type: string
+                example: ok
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "Error 404. Pagina o Petición no encontrada."
-  /items/{id}:
+                type: string
+                example: Error 404. Pagina o Petición no encontrada.
+  /item/{id}:
     get:
       tags:
-      - "items"
-      summary: "obtener un item por id"
-      description: "Permite obtener un item segun id"
+      - item
+      summary: obtener un item por id
+      description: Permite obtener un item segun id
       parameters:
-      - name: "id"
-        in: "path"
-        description: "id del item"
+      - name: id
+        in: path
+        description: id del item
         required: true
-        style: "simple"
+        style: simple
         explode: false
         schema:
           minimum: 1
-          type: "integer"
+          type: integer
           example: 26
       responses:
         "200":
-          description: "Petición validada"
+          description: Petición validada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "escudo"
+                type: string
+                example: escudo
         "404":
-          description: "Petición no encontrada"
+          description: Petición no encontrada
           content:
             application/json:
               schema:
-                type: "string"
-                example: "Error 404. Pagina o Petición no encontrada."
+                type: string
+                example: Error 404. Pagina o Petición no encontrada.
     delete:
       tags:
-      - "items"
-      summary: "eliminar un item por id"
-      description: "Eliminar un item según id"
+      - item
+      summary: eliminar un item por id
+      description: Eliminar un item según id
       parameters:
-      - name: "id"
-        in: "path"
-        description: "id del item"
+      - name: id
+        in: path
+        description: id del item
         required: true
-        style: "simple"
+        style: simple
         explode: false
         schema:
           minimum: 1
-          type: "integer"
+          type: integer
           example: 3
       responses:
         "204":
-          description: "Item fue eliminado"
+          description: Item fue eliminado
 components:
   schemas:
     Usuario:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombre:
-          type: "string"
+          type: string
         correo:
-          type: "string"
+          type: string
         contraseña:
-          type: "string"
+          type: string
         población:
-          type: "string"
+          type: string
         Jugador:
-          type: "object"
+          type: object
     Mapa:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombre:
-          type: "string"
+          type: string
         nivel:
-          type: "integer"
+          type: integer
         Item:
-          type: "object"
+          type: object
         Enemigo:
-          type: "object"
+          type: object
         Aliado:
-          type: "object"
+          type: object
     Jugador:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombreJugador:
-          type: "string"
+          type: string
         Item:
-          type: "object"
+          type: object
         vida:
-          type: "integer"
+          type: integer
         nivel:
-          type: "integer"
+          type: integer
     Item:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombre:
-          type: "string"
+          type: string
         nivel:
-          type: "integer"
+          type: integer
         cantidad:
-          type: "integer"
+          type: integer
         valor:
-          type: "integer"
+          type: integer
+        tipo:
+          type: string
         Mapa:
-          type: "object"
-    Juego:
-      type: "object"
+          type: object
+    Partida:
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         Jugador:
-          type: "object"
+          type: object
         Mapa:
-          type: "object"
+          type: object
         totalMuertes:
-          type: "integer"
+          type: integer
         posicionX:
-          type: "integer"
+          type: integer
         posicionY:
-          type: "integer"
+          type: integer
     Enemigo:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombre:
-          type: "string"
+          type: string
         vida:
-          type: "integer"
+          type: integer
         daño:
-          type: "integer"
+          type: integer
         nivel:
-          type: "integer"
+          type: integer
     Aliado:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
         nombre:
-          type: "string"
+          type: string
         vida:
-          type: "integer"
+          type: integer
         Item:
-          type: "object"
+          type: object
         nivel:
-          type: "integer"
+          type: integer
